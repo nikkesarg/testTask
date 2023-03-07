@@ -1,0 +1,107 @@
+---
+tests:
+  - name: default Docker Compose file
+    template: compose.yml.j2
+    expected_result: default/compose.yml
+
+  - name: custom Docker image
+    template: compose.yml.j2
+    variables:
+      inventory: image/inventory.yml
+    expected_result: image/compose.yml
+
+  - name: container restart policy
+    template: compose.yml.j2
+    variables:
+      inventory: restart_policy/inventory.yml
+    expected_result: restart_policy/compose.yml
+
+  - name: custom URL settings
+    template: compose.yml.j2
+    variables:
+      inventory: url/inventory.yml
+    expected_result: url/compose.yml
+
+  - name: manual HTTPS
+    template: compose.yml.j2
+    variables:
+      inventory: https/manual/inventory.yml
+    expected_result: https/manual/compose.yml
+
+  - name: Let's Encrypt HTTPS
+    template: compose.yml.j2
+    variables:
+      inventory: https/letsencrypt/inventory.yml
+    expected_result: https/letsencrypt/compose.yml
+
+  - name: Puma configuration
+    template: compose.yml.j2
+    variables:
+      inventory: puma_configuration/inventory.yml
+    expected_result: puma_configuration/compose.yml
+
+  - name: set gitlab_monitoring_whitelist (single entry)
+    template: compose.yml.j2
+    variables:
+      inventory: monitoring_whitelist/single_entry/inventory.yml
+    expected_result: monitoring_whitelist/single_entry/compose.yml
+
+  - name: set gitlab_monitoring_whitelist (multiple entries)
+    template: compose.yml.j2
+    variables:
+      inventory: monitoring_whitelist/multiple_entries/inventory.yml
+    expected_result: monitoring_whitelist/multiple_entries/compose.yml
+
+  - name: SMTPS
+    template: compose.yml.j2
+    variables:
+      inventory: email/tls/inventory.yml
+    expected_result: email/tls/compose.yml
+
+  - name: STARTTLS
+    template: compose.yml.j2
+    variables:
+      inventory: email/starttls/inventory.yml
+    expected_result: email/starttls/compose.yml
+
+  - name: insecure transport
+    template: compose.yml.j2
+    variables:
+      inventory: email/insecure_transport/inventory.yml
+    expected_result: email/insecure_transport/compose.yml
+
+  - name: unverified certificate
+    template: compose.yml.j2
+    variables:
+      inventory: email/unverified_cert/inventory.yml
+    expected_result: email/unverified_cert/compose.yml
+
+  - name: private CA
+    template: compose.yml.j2
+    variables:
+      inventory: email/private_ca/inventory.yml
+    expected_result: email/private_ca/compose.yml
+
+  - name: backup keep time
+    template: compose.yml.j2
+    variables:
+      inventory: backup/keep_time/inventory.yml
+    expected_result: backup/keep_time/compose.yml
+
+  - name: upload backups to AWS S3
+    template: compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/aws/inventory.yml
+    expected_result: backup/upload/s3/aws/compose.yml
+
+  - name: upload backups to Digital Ocean Spaces
+    template: compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/digital_ocean/inventory.yml
+    expected_result: backup/upload/s3/digital_ocean/compose.yml
+
+  - name: upload backups to MinIO
+    template: compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/minio/inventory.yml
+    expected_result: backup/upload/s3/minio/compose.yml

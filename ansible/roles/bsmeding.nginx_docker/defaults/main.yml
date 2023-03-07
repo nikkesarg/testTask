@@ -1,0 +1,52 @@
+---
+nginx__name: nginx
+nginx__image: linuxserver/nginx:latest # lscr.io/linuxserver/nginx:latest
+nginx__port_http: 80
+nginx__port_https: 443
+nginx__skip_setup: false # When true, setup is skipped and only config tasks are executed
+nginx__remove_existing_container: no
+nginx__remove_existing_home_dir: no  # ONLY FOR AUTOMATED TEST!! WILL REMOVE ALL DATA!!!!
+nginx__pull_image: yes
+nginx__file_volumes: []
+nginx__network_mode: ''
+nginx__network_cidr: '172.16.22.0/24'
+nginx__disable_http_to_https_redirect: false
+nginx__local_certs_path: ''
+nginx__add_authelia_config: false
+nginx__authelia_upstream_host: authelia
+nginx__authelia_upstream_port: 9091
+nginx__network: 'proxy'
+nginx__container_networks:
+  - name: bridge
+  - name: "{{ nginx__network }}"
+nginx__purge_networks: no
+nginx__log_driver: json-file
+nginx__log_options:
+nginx__home: "/opt/{{ nginx__name }}"
+nginx__directories:
+- path: "{{ nginx__home }}"
+  mode: "0760"
+- path: "{{ nginx__home }}/config"
+  mode: "0770"
+  owner: "1040"
+  group: "1001"
+nginx__ports:
+- "{{ nginx__port_http }}:80"
+- "{{ nginx__port_https }}:443"
+nginx__directory_volumes:
+- "{{ nginx__home }}/config:/config"
+nginx__default_env:
+  TZ: "{{ container_time_zone | default('Europe/Paris') }}"
+  PUID: "1040"
+  PGID: "1001"
+nginx__env: {}
+nginx__proxy_confs_subdomain: []
+  # - server_name: dash.example.com
+  #   listen: 443
+  #   listen_https: 443 # need to enable https
+  #   cert_key_passphrase: 'sbsta261da' # exampe off passhrase of cert.key file if set. Otherwise don't set this variable
+  #   enable_ldap: false
+  #   enable_authelia: true
+  #   default_upstream_proto: http
+  #   default_upstream_url: dashboard
+  #   default_upstream_port: 9090

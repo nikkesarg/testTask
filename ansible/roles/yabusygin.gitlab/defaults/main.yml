@@ -1,0 +1,20 @@
+gitlab_image: gitlab/gitlab-ce:latest
+
+gitlab_hostname: gitlab.test
+gitlab_registry_port: 5050
+
+gitlab_https_enable: no
+gitlab_letsencrypt_enable: no
+
+gitlab_unicorn_force: no
+
+gitlab_email_enable: no
+gitlab_email_smtp_verify_server_cert: yes
+
+gitlab_backup_upload_enable: no
+gitlab_backup_upload_type: s3
+gitlab_backup_cron_enable: no
+gitlab_backup_cron_day_of_month: "*"
+gitlab_backup_cron_month: "*"
+gitlab_backup_cron_day_of_week: "*"
+gitlab_backup_cron_docker_compose_path: docker-compose

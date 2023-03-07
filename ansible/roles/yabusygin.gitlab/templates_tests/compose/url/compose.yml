@@ -1,0 +1,44 @@
+---
+services:
+  gitlab:
+    build:
+      context: ./build
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # URL
+        external_url 'http://gitlab.example.com:8000'
+        registry_external_url 'http://gitlab.example.com:5001'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+
+        # Outgoing emails
+        gitlab_rails['gitlab_email_enabled'] = false
+    volumes:
+      - type: volume
+        source: config
+        target: /etc/gitlab
+      - type: volume
+        source: data
+        target: /var/opt/gitlab
+      - type: volume
+        source: log
+        target: /var/log/gitlab
+    networks:
+      - bridge
+    ports:
+      - protocol: tcp
+        target: 8000
+        published: 8000
+      - protocol: tcp
+        target: 22
+        published: 2222
+      - protocol: tcp
+        target: 5001
+        published: 5001
+volumes:
+  config:
+  data:
+  log:
+networks:
+  bridge:
+    driver: bridge

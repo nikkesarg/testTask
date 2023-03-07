@@ -1,0 +1,24 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: ./lint.sh
+platforms:
+  - name: instance
+    image: ${TEST_IMAGE}
+    pre_build_image: true
+    privileged: true
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # Required for Docker in Docker. Default storage drivers (aufs/overlay2)
+      # don't support AUFS/OverlayFS backing filesystem.
+      - /var/lib/docker
+    keep_volumes: false
+    etc_hosts:
+      gitlab.test: 127.0.0.1
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

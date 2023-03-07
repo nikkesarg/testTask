@@ -1,0 +1,53 @@
+---
+services:
+  gitlab:
+    build:
+      context: ./build
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # URL
+        external_url 'http://gitlab.test'
+        registry_external_url 'http://gitlab.test:5050'
+
+        # Outgoing emails
+        gitlab_rails['gitlab_email_enabled'] = false
+
+        # Backup
+        gitlab_rails['backup_upload_connection'] = {
+          'provider' => 'AWS',
+          'endpoint' => 'https://minio.test',
+          'path_style' => true,
+          'aws_access_key_id' => 'AKIAKIAKI',
+          'aws_secret_access_key' => 'secret123'
+        }
+        gitlab_rails['backup_upload_remote_directory'] = 'my.s3.bucket'
+    volumes:
+      - type: volume
+        source: config
+        target: /etc/gitlab
+      - type: volume
+        source: data
+        target: /var/opt/gitlab
+      - type: volume
+        source: log
+        target: /var/log/gitlab
+    networks:
+      - bridge
+    ports:
+      - protocol: tcp
+        target: 80
+        published: 80
+      - protocol: tcp
+        target: 22
+        published: 22
+      - protocol: tcp
+        target: 5050
+        published: 5050
+volumes:
+  config:
+  data:
+  log:
+networks:
+  bridge:
+    driver: bridge

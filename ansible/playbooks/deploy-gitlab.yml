@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  vars_files:
+#    - "{{ inventory_dir }}/group_vars/secrets.yml"
+  roles:
+    - yabusygin.gitlab
+    - bsmeding.nginx_docker
+    - alexislessard.docker-prometheus
+
+

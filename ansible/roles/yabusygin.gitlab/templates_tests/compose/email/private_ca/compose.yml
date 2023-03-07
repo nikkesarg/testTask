@@ -1,0 +1,56 @@
+---
+services:
+  gitlab:
+    build:
+      context: ./build
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # URL
+        external_url 'http://gitlab.test'
+        registry_external_url 'http://gitlab.test:5050'
+
+        # Outgoing emails
+        gitlab_rails['gitlab_email_enabled'] = true
+        gitlab_rails['gitlab_email_from'] = 'gitlab@test'
+        gitlab_rails['gitlab_email_display_name'] = 'GitLab'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@test'
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = 'smtp.test'
+        gitlab_rails['smtp_port'] = 465
+        gitlab_rails['smtp_tls'] = true
+        gitlab_rails['smtp_enable_starttls_auto'] = false
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+        gitlab_rails['smtp_ca_file'] = '/opt/gitlab/tls/smtp.ca.crt'
+        gitlab_rails['smtp_authentication'] = 'plain'
+        gitlab_rails['smtp_user_name'] = 'gitlab'
+        gitlab_rails['smtp_password'] = 'Pa$$w0rD'
+    volumes:
+      - type: volume
+        source: config
+        target: /etc/gitlab
+      - type: volume
+        source: data
+        target: /var/opt/gitlab
+      - type: volume
+        source: log
+        target: /var/log/gitlab
+    networks:
+      - bridge
+    ports:
+      - protocol: tcp
+        target: 80
+        published: 80
+      - protocol: tcp
+        target: 22
+        published: 22
+      - protocol: tcp
+        target: 5050
+        published: 5050
+volumes:
+  config:
+  data:
+  log:
+networks:
+  bridge:
+    driver: bridge

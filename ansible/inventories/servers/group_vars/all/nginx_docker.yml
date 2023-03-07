@@ -1,0 +1,21 @@
+#nginx__network_cidr: '172.21.0.0/16'
+
+nginx__network: "docker-gitlab_testtask"
+
+nginx__proxy_confs_subdomain:
+ - server_name: grafana.example.com
+   listen: 80
+   enable_ldap: false
+   enable_authelia: false
+   default_upstream_proto: http
+   default_upstream_url: grafana
+   default_upstream_port: 3000
+
+ - server_name: gitlab.example.com
+   listen: 80
+   enable_ldap: false
+   enable_authelia: false
+   default_upstream_proto: http
+   default_upstream_url: gitlab
+   default_upstream_port: 80
+

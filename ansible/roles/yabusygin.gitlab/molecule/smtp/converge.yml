@@ -1,0 +1,26 @@
+---
+- name: converge gitlab
+  hosts: gitlab
+  tasks:
+    - name: install Docker
+      ansible.builtin.import_role:
+        name: yabusygin.docker
+
+    - name: install GitLab
+      ansible.builtin.import_role:
+        name: yabusygin.gitlab
+
+    - name: install HTTPie
+      ansible.builtin.pip:
+        name:
+          - httpie
+        state: present
+
+- name: converge smtp
+  hosts: smtp
+  tasks:
+    - name: add mailbox testing util
+      ansible.builtin.copy:
+        src: contains_message.py
+        dest: /usr/bin/contains_message.py
+        mode: u=rwx,g=rx,o=rx

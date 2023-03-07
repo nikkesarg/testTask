@@ -1,0 +1,26 @@
+galaxy_info:
+  role_name: nginx_docker
+  author: Bart Smeding
+  description: Manage and run the Nginx container from Linuxserver(default).
+  license: MIT
+  company: b@rtsmeding.nl
+  min_ansible_version: '2.10'
+  platforms:
+  - name: Ubuntu
+    versions:
+    - bionic
+    - focal
+    - jammy
+  - name: Debian
+    versions:
+    - stretch
+    - buster
+    - bullseye
+  galaxy_tags:
+  - nginx
+  - reverse proxy
+  - linuxserver
+  - docker
+
+dependencies: []
+  # - bsmeding.docker
